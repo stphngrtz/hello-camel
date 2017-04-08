@@ -1,6 +1,6 @@
 # Saying Hello to Apache Camel
 
-This project is based upon [camel-archetype-java](https://search.maven.org/#search%7Cga%7C1%7Ca%3A%22camel-archetype-java%22) and gives an example of the following components:
+This project is based upon the [camel-archetype-java](https://search.maven.org/#search%7Cga%7C1%7Ca%3A%22camel-archetype-java%22) and gives an example of the following components:
 
 - [camel-jetty](http://camel.apache.org/jetty.html)
 - [camel-http4](http://camel.apache.org/http4.html)
