@@ -1,0 +1,15 @@
+version: "3"
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: my-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672" # Management GUI
+  activemq:
+    image: webcenter/activemq:5.14.3
+    hostname: my-activemq
+    ports:
+      - "8161:8161" # Management GUI
+      - "61616:61616"
+      - "61613:61613"

@@ -1,0 +1,16 @@
+{
+	"nr": 123,
+	"date": "08.05.2015",
+	"customer": "predic8 GmbH",
+	"address": {
+		"zip": "50667",
+		"city": "Köln"
+	},
+	"positions": [{
+		"unit": "Packung",
+		"amount": 5,
+		"description": "Oolong Tee",
+		"price": 5.98,
+		"available": true
+	}]
+}

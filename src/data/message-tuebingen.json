@@ -1,0 +1,22 @@
+{
+	"nr": 456,
+	"date": "08.05.2015",
+	"customer": "predic8 GmbH",
+	"address": {
+		"zip": "72076",
+		"city": "Tübingen"
+	},
+	"positions": [{
+		"unit": "Packung",
+		"amount": 2,
+		"description": "Oolong Tee",
+		"price": 5.98,
+		"available": true
+	},{
+		"unit": "Stück",
+		"amount": 1,
+		"description": "Kanne",
+		"price": 25.00,
+		"available": false
+	}]
+}
