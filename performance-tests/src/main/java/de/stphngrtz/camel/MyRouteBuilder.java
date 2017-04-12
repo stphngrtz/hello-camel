@@ -12,9 +12,9 @@ public class MyRouteBuilder extends RouteBuilder {
 
     private static final boolean KAFKA_PRODUCER = true;
     private static final boolean KAFKA_CONSUMER = true;
-    private static final int KAFKA_PORT = 32768;
+    private static final int KAFKA_PORT = 32775;
 
-    private static final String TOPIC = "test2";
+    private static final String TOPIC = "test";
 
     public void configure() {
         getContext().setTracing(false);
