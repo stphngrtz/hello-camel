@@ -1,0 +1,14 @@
+version: "3"
+services:
+  activemq:
+    image: vromero/activemq-artemis:latest
+    ports:
+      - "8161:8161" # Web Server
+      - "61616:61616" # Port for CORE,MQTT,AMQP,HORNETQ,STOMP,OPENWIRE
+      - "5445:5445" # Port for HORNETQ,STOMP
+      - "5672:5672" # Port for AMQP
+      - "1883:1883" # Port for MQTT
+      - "61613:61613" #Port for STOMP
+    environment:
+      ARTEMIS_USERNAME: admin
+      ARTEMIS_PASSWORD: admin
