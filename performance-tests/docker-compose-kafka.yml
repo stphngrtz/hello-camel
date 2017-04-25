@@ -8,12 +8,14 @@ services:
     image: wurstmeister/kafka:latest
     ports:
       - "9092"
-      - "1099:1099"
+      - "9999:9999"
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 192.168.192.12
+      KAFKA_ADVERTISED_HOST_NAME: 192.168.192.12 # match your docker host IP (Note: Do not use localhost or 127.0.0.1 as the host ip if you want to run multiple brokers.)
+      # HOSTNAME_COMMAND: "route -n | awk '/UG[ \t]/{print $$2}'"
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      #KAFKA_JMX_OPTS: "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.rmi.port=1099" # -Djava.rmi.server.hostname=0.0.0.0
-      JMX_PORT: 1099
+      JMX_PORT: 9999 # to visualize jmx metrics within the kafka-manager, the jmx port has to be published to the same port of the docker host
+      # to access jmx from e.g. jconsole jmx opts has to be set. Make sure that the hostname ist equal to KAFKA_ADVERTISED_HOST_NAME and that the port is equal to JMX_PORT
+      KAFKA_JMX_OPTS: "-Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=192.168.192.12 -Dcom.sun.management.jmxremote.rmi.port=9999"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
   manager:

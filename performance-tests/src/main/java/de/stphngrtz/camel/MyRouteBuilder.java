@@ -11,28 +11,32 @@ public class MyRouteBuilder extends RouteBuilder {
     private static final boolean RABBITMQ_PRODUCER = false;
     private static final boolean RABBITMQ_CONSUMER = false;
     private static final int RABBITMQ_PORT = 5672;
+    private static final int RABBITMQ_PRODUCER_HTTP_PORT = 8081;
 
-    private static final boolean KAFKA_PRODUCER = false;
+    private static final boolean KAFKA_PRODUCER = true;
     private static final boolean KAFKA_CONSUMER = false;
-    private static final int KAFKA_PORT = 32771;
+    private static final int KAFKA_PORT = 32790;
+    private static final int KAFKA_PRODUCER_HTTP_PORT = 8082;
 
     private static final boolean ACTIVEMQ_PRODUCER = false;
     private static final boolean ACTIVEMQ_CONSUMER = false;
     private static final int ACTIVEMQ_PORT = 61616;
+    private static final int ACTIVEMQ_PRODUCER_HTTP_PORT = 8083;
 
-    private static final boolean ARTEMIS_PRODUCER = true;
+    private static final boolean ARTEMIS_PRODUCER = false;
     private static final boolean ARTEMIS_CONSUMER = false;
     private static final int ARTEMIS_PORT = 5672;
+    private static final int ARTEMIS_PRODUCER_HTTP_PORT = 8084;
 
     private static final String TOPIC = "test";
 
     public void configure() {
         getContext().setTracing(false);
         getContext().addComponent("activemq", ActiveMQComponent.activeMQComponent("tcp://localhost:" + ACTIVEMQ_PORT));
-        getContext().addComponent("amqp", AMQPComponent.amqpComponent("amqp://localhost:" + ARTEMIS_PORT, "admin", "admin"));
+        // getContext().addComponent("amqp", AMQPComponent.amqpComponent("amqp://localhost:" + ARTEMIS_PORT, "admin", "admin"));
 
         if (RABBITMQ_PRODUCER)
-            from("jetty:http://0.0.0.0:8081")
+            from("jetty:http://0.0.0.0:" + RABBITMQ_PRODUCER_HTTP_PORT)
                     .inOnly("rabbitmq://localhost:" + RABBITMQ_PORT + "/" + TOPIC) // channelPoolMaxWait=2000
                     .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(200))
                     .setBody(constant(""));
@@ -42,7 +46,7 @@ public class MyRouteBuilder extends RouteBuilder {
                     .log("${body}");
 
         if (KAFKA_PRODUCER)
-            from("jetty:http://0.0.0.0:8082")
+            from("jetty:http://0.0.0.0:" + KAFKA_PRODUCER_HTTP_PORT)
                     .convertBodyTo(String.class)
                     .setProperty("key").jsonpath("$.nr", String.class)
                     .setHeader(KafkaConstants.KEY, exchangeProperty("key"))
@@ -57,7 +61,7 @@ public class MyRouteBuilder extends RouteBuilder {
                     ;
 
         if (ACTIVEMQ_PRODUCER)
-            from("jetty:http://0.0.0.0:8083")
+            from("jetty:http://0.0.0.0:" + ACTIVEMQ_PRODUCER_HTTP_PORT)
                     .inOnly("activemq:" + TOPIC)
                     .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(200))
                     .setBody(constant(""));
@@ -67,7 +71,7 @@ public class MyRouteBuilder extends RouteBuilder {
                     .log("${body}");
 
         if (ARTEMIS_PRODUCER)
-            from("jetty:http://0.0.0.0:8084")
+            from("jetty:http://0.0.0.0:" + ARTEMIS_PRODUCER_HTTP_PORT)
                     .inOnly("amqp:topic:" + TOPIC)
                     .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(200))
                     .setBody(constant(""));
